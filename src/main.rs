@@ -1,5 +1,7 @@
 use std::{self, io};
 
+use somescript::build;
+
 fn main() {
     let mut text = String::new();
 
@@ -9,10 +11,15 @@ fn main() {
             .read_line(&mut text)
             .expect("Failed to readline"); // Do proper error handling
 
-        text = text.trim().to_string();
-
-        if ".quit()" == text.to_lowercase().as_str() {
+        if ".quit()" == text.trim().to_lowercase().as_str() {
             break;
+        } else {
+            let text = text.clone();
+            let result = build(text);
+
+            println!("{:?}", result);
         }
+
+        text.clear();
     }
 }

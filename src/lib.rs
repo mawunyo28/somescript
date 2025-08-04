@@ -4,7 +4,7 @@
 
 #[allow(non_camel_case_types)]
 #[derive(Debug)]
-enum Token_Types {
+enum Token_Type {
     TT_INT_TYPE,
     TT_FLOAT_TYPE,
     TT_BOOL_TYPE,
@@ -34,36 +34,36 @@ enum Token_Types {
     TT_NAME,
 }
 
-impl Token_Types {
+impl Token_Type {
     fn as_string(&self) -> &'static str {
         match self {
-            Token_Types::TT_INT_TYPE => "INT_TYPE",
-            Token_Types::TT_FLOAT_TYPE => "FLOAT_TYPE",
-            Token_Types::TT_BOOL_TYPE => "BOOL_TYPE",
-            Token_Types::TT_INT => "INT",
-            Token_Types::TT_FLOAT => "FLOAT",
-            Token_Types::TT_BOOL => "BOOL",
-            Token_Types::TT_LQUOTE => "LQUOTE",
-            Token_Types::TT_RQUOTE => "RQUOTE",
-            Token_Types::TT_PLUS => "PLUS",
-            Token_Types::TT_MINUS => "MINUS",
-            Token_Types::TT_DIV => "DIV",
-            Token_Types::TT_MOD => "MOD",
-            Token_Types::TT_MUL => "MUL",
-            Token_Types::TT_EXPO => "EXPO",
-            Token_Types::TT_AND => "AND",
-            Token_Types::TT_OR => "OR",
-            Token_Types::TT_NOT => "NOT",
-            Token_Types::TT_LPAREN => "LPAREN",
-            Token_Types::TT_RPAREN => "RPAREN",
-            Token_Types::TT_ASSIGN => "ASSIGN",
-            Token_Types::TT_LESS => "LESS",
-            Token_Types::TT_GREAT => "GREAT",
-            Token_Types::TT_LESS_EQUAL => "LESS_EQUAL",
-            Token_Types::TT_GREAT_EQUAL => "GREAT_EQUAL",
-            Token_Types::TT_EQUAL => "EQUAL",
-            Token_Types::TT_SEMI => "SEMI",
-            Token_Types::TT_NAME => "NAME",
+            Token_Type::TT_INT_TYPE => "INT_TYPE",
+            Token_Type::TT_FLOAT_TYPE => "FLOAT_TYPE",
+            Token_Type::TT_BOOL_TYPE => "BOOL_TYPE",
+            Token_Type::TT_INT => "INT",
+            Token_Type::TT_FLOAT => "FLOAT",
+            Token_Type::TT_BOOL => "BOOL",
+            Token_Type::TT_LQUOTE => "LQUOTE",
+            Token_Type::TT_RQUOTE => "RQUOTE",
+            Token_Type::TT_PLUS => "PLUS",
+            Token_Type::TT_MINUS => "MINUS",
+            Token_Type::TT_DIV => "DIV",
+            Token_Type::TT_MOD => "MOD",
+            Token_Type::TT_MUL => "MUL",
+            Token_Type::TT_EXPO => "EXPO",
+            Token_Type::TT_AND => "AND",
+            Token_Type::TT_OR => "OR",
+            Token_Type::TT_NOT => "NOT",
+            Token_Type::TT_LPAREN => "LPAREN",
+            Token_Type::TT_RPAREN => "RPAREN",
+            Token_Type::TT_ASSIGN => "ASSIGN",
+            Token_Type::TT_LESS => "LESS",
+            Token_Type::TT_GREAT => "GREAT",
+            Token_Type::TT_LESS_EQUAL => "LESS_EQUAL",
+            Token_Type::TT_GREAT_EQUAL => "GREAT_EQUAL",
+            Token_Type::TT_EQUAL => "EQUAL",
+            Token_Type::TT_SEMI => "SEMI",
+            Token_Type::TT_NAME => "NAME",
         }
     }
 }
@@ -77,9 +77,21 @@ enum ValueType {
 }
 
 #[derive(Debug)]
-struct Token {
-    token_type: Token_Types,
+pub struct Token {
+    token_type: Token_Type,
     value: Option<ValueType>,
 }
 
+impl Token {
+    pub fn new(token_type: Token_Type, value: Option<ValueType>) -> Token {
+        Self { token_type, value }
+    }
+}
+
 pub mod lexer;
+
+pub fn build(text: String) -> Vec<Token> {
+    let mut lexer = lexer::Lexer::new(text);
+    lexer.make_tokens();
+    return lexer.tokens;
+}

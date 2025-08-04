@@ -1,14 +1,16 @@
+use super::Token_Type;
+
 use super::Token;
 
 pub struct Lexer {
-    tokens: Vec<Token>,
+    pub tokens: Vec<Token>,
     text: String,
     current_char: Option<char>,
     pos: isize,
 }
 
 impl Lexer {
-    fn new(text: String) -> Self {
+    pub fn new(text: String) -> Self {
         Lexer {
             tokens: Vec::new(),
             text,
@@ -20,11 +22,24 @@ impl Lexer {
         self.pos += 1;
 
         self.current_char = if self.pos < self.text.len() as isize {
-            self.text.chars().nth(self.pos as usize)
+            Some(self.text.chars().nth(self.pos as usize).unwrap())
         } else {
             None
         };
     }
 
-    // fn make_token() -> Result<Vec<Token>, String> {}
+    pub fn make_tokens(&mut self) {
+        self.advance();
+        while self.current_char.is_some() {
+            let current_char = self.current_char.unwrap();
+
+            if current_char == ' ' || current_char == '\n' {
+                self.advance();
+            } else if current_char == '+' {
+                self.tokens.push(Token::new(Token_Type::TT_PLUS, None));
+            }
+
+            self.advance();
+        }
+    }
 }

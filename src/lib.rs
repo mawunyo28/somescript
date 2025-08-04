@@ -2,9 +2,11 @@
 * TOKEN
 */
 
+use std::fmt::Display;
+
 #[allow(non_camel_case_types)]
 #[derive(Debug)]
-enum Token_Type {
+pub enum Token_Type {
     TT_INT_TYPE,
     TT_FLOAT_TYPE,
     TT_BOOL_TYPE,
@@ -69,11 +71,22 @@ impl Token_Type {
 }
 
 #[derive(Debug)]
-enum ValueType {
+pub enum ValueType {
     Int(i32),
     Float(f64),
     String(String),
     Bool(bool),
+}
+
+impl Display for ValueType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ValueType::Int(i) => write!(f, "{i}"),
+            ValueType::Float(d) => write!(f, "{d}"),
+            ValueType::String(s) => write!(f, "{s}"),
+            ValueType::Bool(b) => write!(f, "{b}"),
+        }
+    }
 }
 
 #[derive(Debug)]
@@ -88,10 +101,39 @@ impl Token {
     }
 }
 
+impl Display for Token {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match &self.value {
+            Some(a) => write!(f, "{}:{}", self.token_type.as_string(), a),
+            None => write!(f, "{}", self.token_type.as_string()),
+        }
+    }
+}
+
+pub struct TokenList(pub Vec<Token>);
+
+impl TokenList {
+    pub fn push(&mut self, token: Token) {
+        self.0.push(token);
+    }
+    pub fn new() -> Self {
+        TokenList(Vec::new())
+    }
+}
+
+impl Display for TokenList {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        for token in &self.0 {
+            write!(f, "[{token}] ")?;
+        }
+        Ok(())
+    }
+}
+
 pub mod lexer;
 
-pub fn build(text: String) -> Vec<Token> {
+pub fn build(text: String) -> TokenList {
     let mut lexer = lexer::Lexer::new(text);
     lexer.make_tokens();
-    return lexer.tokens;
+    lexer.tokens
 }

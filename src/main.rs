@@ -17,7 +17,7 @@ fn main() {
             let text = text.clone();
             let result = build(text);
 
-            println!("{:?}", result);
+            println!("{result}",);
         }
 
         text.clear();

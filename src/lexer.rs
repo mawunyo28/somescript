@@ -36,11 +36,29 @@ impl Lexer {
         while self.current_char.is_some() {
             let current_char = self.current_char.unwrap();
             if current_char == ' ' || current_char == '\n' || current_char == '\t' {
-                self.advance();
+                // break;
             } else if current_char == '+' {
                 self.tokens.push(Token::new(Token_Type::TT_PLUS, None));
-                self.advance();
+            } else if current_char == '-' {
+                self.tokens.push(Token::new(Token_Type::TT_MINUS, None));
+            } else if current_char == '/' {
+                self.tokens.push(Token::new(Token_Type::TT_DIV, None));
+            } else if current_char == '*' {
+                self.tokens.push(Token::new(Token_Type::TT_MUL, None));
+            } else if current_char == '%' {
+                self.tokens.push(Token::new(Token_Type::TT_MOD, None));
+            } else if current_char == '(' {
+                self.tokens.push(Token::new(Token_Type::TT_LPAREN, None));
+            } else if current_char == ')' {
+                self.tokens.push(Token::new(Token_Type::TT_RPAREN, None));
+            } else if current_char == '!' {
+                self.tokens.push(Token::new(Token_Type::TT_NOT, None));
+            } else if current_char == ':' {
+                self.tokens.push(Token::new(Token_Type::TT_ASSIGN, None));
+            } else if current_char == '"' {
+                self.tokens.push(Token::new(Token_Type::TT_LQUOTE, None));
             }
+            self.advance();
         }
     }
 }

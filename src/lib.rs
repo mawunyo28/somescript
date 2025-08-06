@@ -13,8 +13,9 @@ pub enum Token_Type {
     TT_INT,
     TT_FLOAT,
     TT_BOOL,
-    TT_LQUOTE,
-    TT_RQUOTE,
+    // TT_LQUOTE,
+    // TT_RQUOTE,
+    TT_QUOTE,
     TT_PLUS,
     TT_MINUS,
     TT_DIV,
@@ -45,8 +46,9 @@ impl Token_Type {
             Token_Type::TT_INT => "INT",
             Token_Type::TT_FLOAT => "FLOAT",
             Token_Type::TT_BOOL => "BOOL",
-            Token_Type::TT_LQUOTE => "LQUOTE",
-            Token_Type::TT_RQUOTE => "RQUOTE",
+            // Token_Type::TT_LQUOTE => "LQUOTE",
+            // Token_Type::TT_RQUOTE => "RQUOTE",
+            Token_Type::TT_QUOTE => "QOUTE",
             Token_Type::TT_PLUS => "PLUS",
             Token_Type::TT_MINUS => "MINUS",
             Token_Type::TT_DIV => "DIV",
@@ -118,6 +120,12 @@ impl TokenList {
     }
     pub fn new() -> Self {
         TokenList(Vec::new())
+    }
+}
+
+impl Default for TokenList {
+    fn default() -> Self {
+        Self::new()
     }
 }
 

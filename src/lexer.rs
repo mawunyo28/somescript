@@ -56,7 +56,7 @@ impl Lexer {
             } else if current_char == ':' {
                 self.tokens.push(Token::new(Token_Type::TT_ASSIGN, None));
             } else if current_char == '"' {
-                self.tokens.push(Token::new(Token_Type::TT_LQUOTE, None));
+                self.tokens.push(Token::new(Token_Type::TT_QUOTE, None));
             }
             self.advance();
         }
